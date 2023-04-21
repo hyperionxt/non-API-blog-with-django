@@ -7,3 +7,5 @@ fontawesomefree
 pillow
 six
 django-mptt
+djangorestframework
+django-allauth
