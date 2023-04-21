@@ -9,7 +9,7 @@ from django.contrib.auth.decorators import login_required
 @login_required
 def subscriptions_list(request):
     
-    subscriptions=Subscriptions.objects.filter(username=request.user.username).all()
+    subscriptions=Subscriptions.objects.filter(username=request.user).all()
     
     return subscriptions
 
