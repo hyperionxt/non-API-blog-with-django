@@ -1,0 +1,77 @@
+{% extends "home_app/base.html" %}
+{% block content %}
+{% load humanize %}
+<legend class="border-bottom mb-4">Community:</legend>
+
+<div style="display: flex;">
+    <div style="flex: 0 0 auto; margin-right: 20px;">
+        
+      <img src="{{comm_object.image.url}}" style="float:left;
+      border-radius: 50%;
+      width: 180px;
+      height: 180px;
+      margin-right: 20px;
+      ">
+
+    </div>
+    <div style="flex: 1 1 auto;">
+      <h2>{{ comm_object.title }}</h2>
+      <p>{{ comm_object.about }}</p>
+        {% if request.user.is_authenticated %}
+
+            {% include "subscribe.html" %}
+
+        {% endif %}
+    </div>
+    {% if user.is_superuser %}
+    
+    <div class="ml-auto">
+        <a class="btn btncolor btn-sm mt-1 mb-1" href="{% url 'community-edit' comm_object.slug %}">Edit</a>
+        <a class="btn btn-danger btn-sm mt-1 mb-1" href="{% url 'community-delete' comm_object.author comm_object.slug %}">Delete</a>
+    </div>
+    {% endif %}
+    
+  </div>
+
+<legend class="border-bottom mb-4">Posts:</legend>
+<div class="row display-flex justify-content-start">
+
+        {% for object in p_objects %}
+
+        <div class="col-lg-4 col-md-6 col-sm-12 mobiledevice">            
+            <article class="media content-section customhover" style="height: 95%;">              
+            <div class="media-body">
+                    <div>                      
+                            <a class="article-title line-clamp-2 title-style" href="/{{object.slug}}"style="font-size: 22px">                           
+                                {{ object.title }}                  
+                            </a>     
+                    </div>
+                    <div class="article-metadata">
+                            in: <a class="mr-2" href="{% url 'community' object.community.slug %}">{{ object.community }}</a><br>
+                            posted by: <a class="mr-2" href="{% url 'profile' object.author.username %}">{{ object.author }}</a>  
+                            <small class="text-muted">{{ object.published|naturaltime}}</small>
+                        </div>                       
+                        {% if object.image.url != None %}
+                            <div class="aspect-ratio-box">
+                                <a href="/{{object.slug}}">
+                                    <img class="img-fluid" src="{{object.image.url}}">
+                                </a>
+                            </div>
+                        {% else %}
+                        {% endif %}
+                
+                    <div class="article-metadata">
+                        {% if object.author == user %}
+                            <div style="float:right">
+                                    <a class="btn btncolor btn-sm mt-1 mb-1" href="{% url 'post-edit' object.community.slug object.post_slug %}">Edit</a>
+                                    <a class="btn btn-danger btn-sm mt-1 mb-1" href="{% url 'post-delete' object.community.slug object.post_slug object.author %}">Delete</a>
+                            </div>
+                        {% endif %}
+                    </div>
+                </div>               
+                </article>          
+        </div>   
+    {% endfor %}
+    </div>
+    
+{% endblock content %}

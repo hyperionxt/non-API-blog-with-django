@@ -1,0 +1,98 @@
+{% extends "home_app/base.html" %}
+{% load crispy_forms_tags %}
+{% load humanize %}
+
+{% block content %}
+
+
+<div class="content-section col-lg-12 col-md-12 col-sm-12 tutorial-style" style="min-height:65vh; width: 50%; margin: auto">
+    <legend class="border-bottom mb-4">Profile Information:</legend>
+    <form method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        <div class="media">
+            {# if the user is the owner of this profile #}
+            {% if user.username == form.instance.username %}
+                <input id="id_image" type="file" name="image" hidden/>
+
+                    <label for ="id_image">
+                        <img class="rounded-circle account-img size-profile-image" style="cursor: pointer", 
+                        src="{{ form.instance.image.url}}", 
+                        title="Upload new image">
+                    </label>
+            {% else %}
+                <img class="rounded-circle account-img size-profile-image" src="{{ form.instance.image.url}}">
+            {% endif %}
+            <div class="media-body">
+                <h2 class="account-heading">{{ form.instance.username }}
+
+                {% if user.is_superuser %}
+                        <small class="text-muted">({{ form.instance.status }})</small>
+                    </h2>
+                    <p class="text-secondary">{{ form.instance.first_name }} {{ form.instance.last_name }}</p>
+                    
+                        <p class="text-secondary">{{ form.instance.email }}</p>
+                {% endif %}
+                <p class="text-secondary">{{ form.instance.description }}</p>
+            </div>
+        </div>
+        {# Condition to get access only by the owner #}
+        {% if user.username == form.instance.username %}
+            <fieldset class="form-group">
+                <legend class="border-bottom mb-4">Edit Profile Information</legend>
+                <div class="form-row">
+                    <div class="form-group col-md-6 mb-0">
+                        {{ form.first_name|as_crispy_field }}
+                    </div>
+                    <div class="form-group col-md-6 mb-0">
+                        {{ form.last_name|as_crispy_field }}
+                    </div>
+                </div> 
+                {{ form.email|as_crispy_field }}
+                {{ form.description|as_crispy_field }}
+
+                <a href="{% url 'change_pass' %}">Change password?</a>
+            </fieldset>
+            <div class="form-group">
+                <button class="btn btn-outline-info" type="submit">Update</button>
+            </div>
+        {% endif %}
+    </form>
+</div>
+
+{% if user.username == form.instance.username %}
+
+<legend class="border-bottom mb-4">Communities You Created:</legend>
+<div class="row display-flex justify-content-start">
+  
+    {% for object in c_objects %}
+        {% if object.author == user %}
+
+    
+    <div class="col-lg-4 col-md-6 col-sm-12 mobiledevice">            
+        <article class="media content-section customhover" style="height: 95%;">              
+            <div class="media-body">
+                    <div>
+                        <a class="article-title line-clamp-2 title-style" style="font-size: 22px">
+                            {{ object.title }}
+                            <p class="subtitle-style">{{ object.about }}</p>
+                            <small class="text-muted">{{ object.published|naturaltime}}</small>
+                            <div class="aspect-ratio-box">
+                                <a href="/{{object.slug}}">
+                                    <img class="img-fluid" src="{{object.image.url}}">
+                                </a>
+                            </div>
+                    </div>
+                    <div>
+                        <a class="btn btncolor btn-sm mt-1 mb-1" href="{% url 'community-edit' object.slug %}">Edit</a>
+                        <a class="btn btn-danger btn-sm mt-1 mb-1" href="{% url 'community-delete' object.slug %}">Delete</a>
+                    </div>
+                    
+            </div>
+        </article>
+    </div>
+</div>
+        {% endif %}
+    {% endfor %}
+
+{% endif %}
+{% endblock %}

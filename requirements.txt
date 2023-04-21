@@ -1,0 +1,9 @@
+django
+psycopg2
+django-crispy-forms
+django-recaptcha
+django-tinymce
+fontawesomefree
+pillow
+six
+django-mptt

@@ -1,0 +1,12 @@
+<div style="margin: auto; text-align: left;">
+
+    Categories:
+    
+    {% for object in objects %}
+        <li>
+            <a href="{% url 'show-category' object.post_category.slug %}">{{object.post_category.title}}</a>
+        </li>
+    {% endfor %}
+    
+
+</div>

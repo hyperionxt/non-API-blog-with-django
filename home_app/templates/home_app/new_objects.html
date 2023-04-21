@@ -1,0 +1,79 @@
+{% extends "home_app/base.html" %}
+{% load crispy_forms_tags %}
+{% block content %}
+<head>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/subcategory/4.0.13/js/i18n/zh-TW.min.js" integrity="sha512-whWyZS4LtoXu4LzFJbHIgL9Cr7Sf2+KyeEAGumtXN+8U234v1R89monfd9PLYnC0TNBArmPnkFOVo8ShuMpZaw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/subcategory/4.0.13/css/subcategory.css" integrity="sha512-p209YNS54RKxuGVBVhL+pZPTioVDcYPZPYYlKWS9qVvQwrlzxBxkR8/48SCP58ieEuBosYiPUS970ixAfI/w/A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+  
+  <script>
+    $(document).ready(function() 
+    {
+      var $cat_select = $('#cat_select'),
+          $sub_select = $('#sub_select'),
+          $options = $sub_select.find('option');
+          $cat_select.on('change', function()
+          {
+            var category_id = $(this).val();
+            $sub_select.html($options.filter('[data-category-id="' + category_id + '"]'));
+          }).trigger('change');
+    });
+
+    </script>
+    <script>
+      $(document).ready(function()
+      {
+        $("$cat_select").sub_select({
+
+        });
+        $('#sub_select').sub_select({
+
+        });
+      });
+
+    </script>
+</head>
+
+    <div class="content-section">
+        <form method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+            <fieldset class="form-group">
+                <legend class="border-bottom mb-4">New {{ object }}</legend>
+                {{ form|crispy }}
+                {{ form.media }}
+              {% if object != "Post" %}
+                <select name="category" id="cat_select">
+                  <option selected disabled="true">--select category--</option>
+                  {% for category in categories %}
+                    <option value="{{category.id}}">{{category.title}}</option>
+                  {%  endfor  %}
+                </select>
+
+                <select  name="subcategory" id="sub_select">
+                  <option selected disabled="true"></option>
+                  {% for subcategory in subcategories %}
+                    <option value="{{subcategory.id}}" class="subcategory-option" data-category-id="{{subcategory.category_id}}">{{subcategory.title}}</option>
+                  {%  endfor  %}
+                </select>
+
+              {% endif %}
+            </fieldset>
+            {% if type != "update" %}
+              {% if object == "Community" %}
+                  <div class="form-group">
+                      <button class="btn btncolor" type="submit">Create</button>
+                  </div>
+              {% else %}
+                  <div class="form-group">
+                      <button class="btn btncolor" type="submit">Publish</button>
+                  </div>
+              {% endif %}
+            {% else %}
+            <div class="form-group">
+              <button class="btn btncolor" type="submit">Update</button>
+            </div>
+            {% endif %}
+        </form>
+    </div>
+
+    {% endblock content %}

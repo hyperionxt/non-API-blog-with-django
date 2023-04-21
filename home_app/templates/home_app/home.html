@@ -1,0 +1,69 @@
+{% extends "home_app/base.html" %}
+{% block content %}
+{% load humanize %}
+
+
+{% if user.is_authenticated %}
+    {% if not type == "category" %}
+        <div class="row m-4">
+            <div class="border-bottom">
+            <h3>Your Subscriptions:</h3>
+            <ul>
+                {% for sub in subs %}
+                    <li><a href="{% url 'community' sub.community.slug %}">{{ sub.community.title }}</a></li>
+                {% empty %}
+                    <li>You do not have supscriptions yet.</li>
+                {% endfor %}
+            </ul>
+            </div>
+        </div>
+
+    {% endif %}
+{% endif %}
+
+{% if type == "category" %}
+    <legend class="border-bottom mb-4">Posts in  {{cat.title}} category:</legend>
+{% else %}
+    <legend class="border-bottom mb-4">Recent Posts:</legend>
+{% endif %}
+
+    <div class="row display-flex justify-content-start">
+        {% for object in objects %}
+        <div class="col-lg-4 col-md-6 col-sm-12 mobiledevice">            
+            <article class="media content-section customhover" style="height: 95%;">              
+            <div class="media-body">
+                    <div>                       
+                            <a class="article-title line-clamp-2 title-style" href="/{{object.slug}}"style="font-size: 22px">
+                                {{ object.title }}                 
+                            </a>             
+                    </div>
+                    <div class="article-metadata">
+                            in: <a class="mr-2" href="{% url 'community' object.community.slug %}">{{ object.community }}</a><br>
+                            posted by: <a class="mr-2" href="{% url 'profile' object.author.username %}">{{ object.author }}</a>  
+                            <small class="text-muted">{{ object.published|naturaltime}}</small>
+                        </div>                       
+                        {% if object.image.url != None %}
+                            <div class="aspect-ratio-box">
+                                <a href="/{{object.slug}}">
+                                    <img class="img-fluid" src="{{object.image.url}}">
+                                </a>
+                            </div>
+                        {% else %}
+                        {% endif %}
+                
+                    <div class="article-metadata">
+                        {% if object.author == user %}
+                            <div style="float:right">
+                                    <a class="btn btncolor btn-sm mt-1 mb-1" href="{% url 'post-edit' object.community.slug object.post_slug %}">Edit</a>
+                                    <a class="btn btn-danger btn-sm mt-1 mb-1" href="{% url 'post-delete' object.community.slug object.post_slug object.author %}">Delete</a>
+                            </div>
+                        {% endif %}
+                    </div>
+                </div>     
+                </article>           
+        </div>
+    
+    {% endfor %}
+    </div>
+     
+{% endblock content %}

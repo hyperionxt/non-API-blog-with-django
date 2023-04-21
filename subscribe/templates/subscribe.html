@@ -1,0 +1,5 @@
+{% if sub == False %}
+<a class="btn btn-success btn-sm mt-1 mb-1" href="{% url 'subscribe' comm_object.slug %}">Subscribe</a>
+{% else %}
+<a class="btn btn-danger btn-sm mt-1 mb-1" href="{% url 'unsubscribe' comm_object.slug %}">Unsubscribe</a>
+{% endif %}

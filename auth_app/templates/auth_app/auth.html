@@ -1,0 +1,33 @@
+{% extends "home_app/base.html" %}
+
+{% load crispy_forms_tags %}
+{% block content %}
+
+<div class="content-section">
+    <form method="POST">
+
+        {% csrf_token %}
+            <div style="width: 20%; margin: auto">
+                <h1>Sign Up</h1>
+
+            {# parameter received from view's render #}
+
+            {{form|crispy}}
+
+            By registering, you accept the Terms of Service and Privacy Notice.
+            <div class="form-group">
+                <button type="submit" class="btn btn-outline-info">Sign up</button>
+            </div>
+            
+        </div>
+    </form>
+    <div style="text-align:center" class="border-top pt-3">
+        <small class ="text-muted">
+            Already Have An Account? <a class="ml-2" href="{% url 'log_in_session' %}">Sign In</a>
+        </small>
+    </div>
+</div>
+{% endblock %}
+
+
+
