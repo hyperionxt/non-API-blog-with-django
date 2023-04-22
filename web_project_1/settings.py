@@ -14,8 +14,7 @@ from pathlib import Path
 import os
 
 import sys
-sys.path.append('C:\\Users\\Usuario\\Documents\\coding\\data-config')
-import base
+from .. import base
 import dj_database_url
 
 from django.contrib.messages import constants as error_messages
