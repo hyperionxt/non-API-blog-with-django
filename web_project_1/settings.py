@@ -14,7 +14,7 @@ from pathlib import Path
 import os
 
 import sys
-from configdata import *
+import configdata
 import dj_database_url
 
 from django.contrib.messages import constants as error_messages
