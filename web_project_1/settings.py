@@ -14,7 +14,7 @@ from pathlib import Path
 import os
 
 import sys
-from .. import base
+from configdata import *
 import dj_database_url
 
 from django.contrib.messages import constants as error_messages
@@ -116,7 +116,7 @@ WSGI_APPLICATION = 'web_project_1.wsgi.application'
 # # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
 
 DATABASES = {
-    'default': base.DEFAULT
+    'default': configdata.DEFAULT
 }
 
 
@@ -171,14 +171,14 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 # EMAIL CONFORMATION SINGUP SETUP
 
-EMAIL_BACKEND = base.EMAIL_BACKEND
-EMAIL_HOST= base.EMAIL_HOST
-EMAIL_USE_TLS = base.EMAIL_USE_TLS
-EMAIL_PORT= base.EMAIL_PORT
-EMAIL_FROM = base.EMAIL_FROM
-EMAIL_HOST_USER = base.EMAIL_HOST_USER
-EMAIL_HOST_PASSWORD = base.EMAIL_HOST_PASSWORD
-PASSWORD_RESET_TIMEOUT = base.PASSWORD_RESET_TIMEOUT
+EMAIL_BACKEND = configdata.EMAIL_BACKEND
+EMAIL_HOST= configdata.EMAIL_HOST
+EMAIL_USE_TLS = configdata.EMAIL_USE_TLS
+EMAIL_PORT= configdata.EMAIL_PORT
+EMAIL_FROM = configdata.EMAIL_FROM
+EMAIL_HOST_USER = configdata.EMAIL_HOST_USER
+EMAIL_HOST_PASSWORD = configdata.EMAIL_HOST_PASSWORD
+PASSWORD_RESET_TIMEOUT = configdata.PASSWORD_RESET_TIMEOUT
 
 
 # Default primary key field type
@@ -225,9 +225,9 @@ SOCIALACCOUNT_PROVIDERS ={
 #---------------------
 
 #DJANGO CAPTCHA
-RECAPTCHA_PUBLIC_KEY = base.RECAPTCHA_PUBLIC_KEY
-RECAPTCHA_PRIVATE_KEY = base.RECAPTCHA_PRIVATE_KEY
-SILENCED_SYSTEM_CHECKS = base.SILENCED_SYSTEM_CHECKS
+RECAPTCHA_PUBLIC_KEY = configdata.RECAPTCHA_PUBLIC_KEY
+RECAPTCHA_PRIVATE_KEY = configdata.RECAPTCHA_PRIVATE_KEY
+SILENCED_SYSTEM_CHECKS = configdata.SILENCED_SYSTEM_CHECKS
 
 
 #----------------------
