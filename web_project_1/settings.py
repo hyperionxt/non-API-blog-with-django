@@ -16,7 +16,7 @@ import os
 import sys
 sys.path.append('C:\\Users\\Usuario\\Documents\\coding\\data-config')
 import base
-
+import dj_database_url
 
 from django.contrib.messages import constants as error_messages
 
@@ -29,12 +29,21 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/4.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-5kk*^m=u_dnzyrdwsg99e-h@#lx2124##0qrh@*pm!gzmrs&u='
+SECRET_KEY = os.environ.get('SECRET_KEY', default='your secret key')
+#SECRET_KEY = 'django-insecure-5kk*^m=u_dnzyrdwsg99e-h@#lx2124##0qrh@*pm!gzmrs&u='
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
+# IF RENDER IS NOT INSIDE OF THE VARIABLE ENVIRONMENT THEN DEBUG WILL BE TRUE
+DEBUG = 'RENDER' not in os.environ
+
 ALLOWED_HOSTS = []
+
+RENDER_EXTERNAL_HOSTNAME = os.environ.get('RENDER_EXTERNAL_HOSTNAME')
+
+if RENDER_EXTERNAL_HOSTNAME:    
+    ALLOWED_HOSTS.append(RENDER_EXTERNAL_HOSTNAME)
 
 
 # Application definition
@@ -74,6 +83,7 @@ AUTH_USER_MODEL = 'auth_app.CustomUser'
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -107,14 +117,7 @@ WSGI_APPLICATION = 'web_project_1.wsgi.application'
 # # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
 
 DATABASES = {
-    'default': {
-        'ENGINE': base.ENGINE,
-        'NAME': base.NAME, 
-        'USER': base.USER, 
-        'PASSWORD': base.PASSWORD,
-        'HOST': base.HOST, 
-        'PORT': base.PORT, 
-    }
+    'default': base.DEFAULT
 }
 
 
@@ -153,6 +156,14 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/4.1/howto/static-files/
 
 STATIC_URL = 'static/'
+
+if not DEBUG:    
+    # Tell Django to copy statics to the `staticfiles` directory
+    # in your application directory on Render.
+    STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+    # Turn on WhiteNoise storage backend that takes care of compressing static files
+    # and creating unique names for each version so they can safely be cached forever.
+    STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 # PATH TO SAVE ALL MEDIA FILES.
 MEDIA_URL = '/media/' 
