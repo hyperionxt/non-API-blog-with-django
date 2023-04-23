@@ -15,7 +15,8 @@ applications: subscriptions and comments.
 • subcategories related by categories.  
 • you can subscribe to the communities you want.  
 • home view shows your subscriptions and a category and subcategory filter.  
-• you can comment on posts and reply to comments.  
+• you can comment on posts and reply to comments.
+• CRUD with django REST framework.
 
 
 **Changed**.
@@ -26,7 +27,8 @@ applications: subscriptions and comments.
 • posts inherit the categories and subcategories of the communities to which they belong automatically.  
 
 
-note: there are so many improves to make but this is only a practice.
+note: there are so many improves to make but this is only a generic practice.
+  note 1.1: i deployed this project on render.com and it works fine.
 
 
 
