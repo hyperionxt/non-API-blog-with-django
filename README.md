@@ -25,6 +25,7 @@ applications: subscriptions and comments.
 • posts are grouped by communities.  
 • post creation is only enabled within a community and therefore inherits the community object automatically in the form.  
 • posts inherit the categories and subcategories of the communities to which they belong automatically.  
+• more security.
 
 
 note: this project needs more frontend work but this is only a practice in the backend side  
