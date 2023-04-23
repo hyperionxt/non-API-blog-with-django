@@ -27,7 +27,7 @@ applications: subscriptions and comments.
 • posts inherit the categories and subcategories of the communities to which they belong automatically.  
 
 
-note: there are so many improves to make but this is only a generic practice.  
+note: this project needs more frontend work but this is only a practice in the backend side  
   note 1.1: i deployed this project on render.com and it works fine.
 
 
