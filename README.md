@@ -16,7 +16,7 @@ applications: subscriptions and comments.
 • you can subscribe to the communities you want.  
 • home view shows your subscriptions and a category and subcategory filter.  
 • you can comment on posts and reply to comments.  
-• CRUD with django REST framework.  
+• CRUD with django REST framework(you must create your own venv).  
 
 
 **Changed**.
