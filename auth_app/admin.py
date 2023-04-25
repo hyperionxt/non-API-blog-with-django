@@ -3,8 +3,7 @@ from .models import CustomUser
 
 class UserView(admin.ModelAdmin):
     
-    list_display=("username","id","email","status")
+    list_display=("username","id","email","is_superuser")
     search_fields=("username","id","email",)
-    list_filter=("status",)
 
 admin.site.register(CustomUser, UserView)

@@ -3,12 +3,15 @@ from . import views
 from django.conf import settings
 from django.conf.urls.static import static
 from rest_framework import routers
-from .api import CategoryViewSet
+from .api import *
 
 
 
 router = routers.DefaultRouter()
-router.register('api-view/category', CategoryViewSet, 'category-api')
+router.register('category', CategoryViewSet, 'category-api')
+router.register('subcategory', SubCategoryViewSet, 'subcategory-api')
+router.register('community', CommunityViewSet, 'ccommunity-api')
+router.register('post', PostViewSet, 'post-api')
 
 urlpatterns = [
     

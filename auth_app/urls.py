@@ -1,5 +1,11 @@
-from django.urls import path
+from django.urls import path,include
 from . import views
+from rest_framework import routers
+from .api import CustomUserViewSet
+
+
+router = routers.DefaultRouter()
+router.register('users', CustomUserViewSet, 'users')
 
 
 urlpatterns = [
@@ -17,6 +23,7 @@ path('reset/<uidb64>/<token>', views.pass_reset_confirm, name='pass_reset_confir
 path('social/signup/', views.signup_redirect, name='signup_redirect'),
 
 
+path("api/", include(router.urls)),
 
    
 ]

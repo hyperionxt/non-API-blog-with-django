@@ -14,8 +14,7 @@ class Category(models.Model):
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
     author = models.ForeignKey(get_user_model(), default=1, on_delete=models.SET_DEFAULT)
-    
-    
+       
     class Meta:
         verbose_name='category'
         verbose_name_plural='categories'
@@ -32,8 +31,7 @@ class Sub_Category(models.Model):
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
     author = models.ForeignKey(get_user_model(), default=1, on_delete=models.SET_DEFAULT)
-    
-    
+       
     class Meta:
         verbose_name='subcategory'
         verbose_name_plural='subcategories'
@@ -43,8 +41,7 @@ class Sub_Category(models.Model):
 
 
 class Community(models.Model):
-    
-    
+     
     title = models.CharField(max_length=100, blank=False)
     about = models.CharField(max_length=200, blank=False, unique = True)
     category = models.ForeignKey(Category, on_delete=models.SET_NULL, blank=False, null=True)
@@ -56,19 +53,16 @@ class Community(models.Model):
     author = models.ForeignKey(get_user_model(), default=1, on_delete=models.SET_DEFAULT)
     image = models.ImageField("File(image, gif or video)", upload_to='community', null=True, blank=True,max_length=255)
     
-    
-  
     def __str__(self):
         return self.title
-    
-    
+     
     class Meta:
         verbose_name_plural="communities"
         ordering = ['-published']
+        
                             
 class Post(models.Model):
     
-
     title = models.CharField(max_length=100, blank=False)
     post_slug = models.SlugField('Post slug', unique=True, blank= False, null = False)
     content =  HTMLField(blank=True, default="")

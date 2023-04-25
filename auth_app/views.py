@@ -80,7 +80,6 @@ def signup(request):
         form = UserRegistrationForm(request.POST)
         # If the informaton from the text boxes is valid then register the new user.
         if form.is_valid():
-            # Commit = False means it wont be saved on the db
             user=form.save(commit=False)
             # If the user doesnt have a activated account by email, this user will be False and not allowed to login.
             user.is_active=False
